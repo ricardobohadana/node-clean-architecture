@@ -1,4 +1,4 @@
-# Criação do projeto
+## Criação do projeto
 
 1. Rodar script de criação de pacote: `npm init -y`
 2. Instalar dependências de desenvolvimento para utilização do typescript:
@@ -15,7 +15,31 @@
    - Na forma manual, rodamos `npm install eslint -D` para instalar o eslint como dependência de desenvolvimento no projeto. Em seguida, cria-se o arquivo de configuração do eslint e especifica-se as regras que devem ser aplicadas ao código. Para esta api, utilizarei a configuração automática.
    - Criar arquivo `.eslintignore` e colocar as pastas `node_modules` e `build` dentro dele.
 
-# Início do desenvolvimento da API
+## Início do desenvolvimento das entidades da aplicação
+
+- DRY - Don't repeat yourself
+- Não permita alterações diretas nas propriedades das classes (boa prática), somente campos mutáveis devem ter métodos que alteram seu valor de acordo com a regra de negócio definida
+- Cria-se os métodos set de acordo com a necessidade, deixando todas as variáveis, num primeiro momento, como private.
+
+## TDD
+
+![image](https://marsner.com/wp-content/uploads/test-driven-development-TDD.png)
+
+## Primeiro teste unitário
+
+1. Configurando o Vitest:
+   - `npm install vitest -D`
+   - `npm i -D @faker-js/faker`
+2. Criando os scripts de teste:
+   - `"test": "vitest run --dir src/tests/use-cases"`
+   - `"test:watch": "vitest --dir src/tests/use-cases"`
+3. Existem duas abordagens na construção de testes unitários para a sua aplicação
+   - A primeira abordagem consiste em criar _`InMemoryDatabaseRepositories`_ para lidar com os testes
+   - A segunda consiste em fazer um _`mock`_ dos repositórios para testar os casos de uso.
+   - Neste treinamento, vamos optar pelo _`mock`_ do repositório instalando o pacote `vitest-mock-extended`.
+   - Comando para verificar a cobertura dos testes: `"test:coverage": "vitest --coverage"`
+
+## Início do desenvolvimento da API
 
 1. Para este treinamento iremos utilizar o pacote `fastify` em detrimento do famoso `express`. A principal motivação para tal decisão é o fato de o express ter atingido seu estado máximo de desenvolvimento, enquanto o `fastify` é mantido de forma mais ativa, com melhor suporte e uma melhora considerável na performance.
    Assim: `npm install fastify`
@@ -30,7 +54,7 @@
    - `"build": "tsup src --out-dir build"` ➡️ responsável pela transformação da aplicação ts em js para o processo de deploy
    - `"start": "build/server.js"` ➡️ responsável pelo início da aplicação definitiva js (production ready version)
 
-# Adicionando a camada de dados da aplicação
+## Adicionando a camada de dados da aplicação
 
 1. Utilizaremos um ORM chamado `Prisma`, bastante conhecido no mundo do _nodejs_ devido à sua performance e integração fantástica com o Typescript. Para isso, instalaremos o pacote com `npm install prisma`
 2. No link abaixo está a documentação do prisma sobre como iniciar o setup de acordo com os diferentes banco de dados que você está trabalhando. Aqui utilizaremos o SQL Server.
@@ -44,24 +68,11 @@
 
 3. Define-se os modelos das entidades/tabelas dos bancos de dados e faz-se a migração com o comando `npx prisma migrate dev`
 
-# Primeiro use-case
+## Primeiro use-case
 
 ![image](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*0R0r00uF1RyRFxkxo3HVDg.png)
 
-# Primeiro teste unitário
-
-1. Configurando o Vitest:
-   - `npm install vitest -D`
-2. Criando os scripts de teste:
-   - `"test": "vitest run --dir src/tests/use-cases"`
-   - `"test:watch": "vitest --dir src/tests/use-cases"`
-3. Existem duas abordagens na construção de testes unitários para a sua aplicação
-   - A primeira abordagem consiste em criar _`InMemoryDatabaseRepositories`_ para lidar com os testes
-   - A segunda consiste em fazer um _`mock`_ dos repositórios para testar os casos de uso.
-   - Neste treinamento, vamos optar pelo _`mock`_ do repositório instalando o pacote `vitest-mock-extended`.
-   - Comando para verificar a cobertura dos testes: `"test:coverage": "vitest --coverage"`
-
-# Primeiro teste e2e
+## Primeiro teste e2e
 
 1. Para realizarmos testes e2e sem precisar iniciar nossa aplicação, utilizamos o pacote `supertest`
 

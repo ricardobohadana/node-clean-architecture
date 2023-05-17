@@ -48,11 +48,12 @@
 <details>
   <summary>Quais as ações (casos de uso) que essa aplicação deve ter?</summary>
     <ul>
-      <li>Cadastrar produto</li>
-      <li>Vender produto</li>
+      <li>Criar produto</li>
       <li>Comprar produto</li>
+      <li>Vender produto</li>
+      <li>Pegar lista de produtos cadastrados</li>
       <li>Definir limite mínimo de estoque para um produto</li>
-      <li>Visualizar historico de compra e venda</li>
+      <li>Visualizar historico de compra e venda de um produto</li>
       <li>Gerar notificação de produto acabando</li>
     </ul>
 </details>
