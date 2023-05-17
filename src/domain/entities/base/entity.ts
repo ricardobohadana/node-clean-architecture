@@ -7,15 +7,24 @@ export type EntityProps = {
 	createdAt: Date;
 };
 
-export class Entity<Props> {
-	protected props: EntityProps;
+export type BaseEntityProps = Optional<EntityProps, 'id' | 'updatedAt' | 'createdAt'>;
 
-	constructor(props: Optional<EntityProps, 'id' | 'updatedAt' | 'createdAt'>) {
-		this.props = {
+export class Entity<Props> {
+	protected entityProps: EntityProps;
+	protected props: Props;
+
+	protected constructor({entityProps, props}: {entityProps: BaseEntityProps; props: Props}) {
+		this.entityProps = {
 			id: randomUUID(),
 			createdAt: new Date(),
 			updatedAt: new Date(),
-			...props,
+			...entityProps,
 		};
+
+		this.props = props;
+	}
+
+	protected touch() {
+		this.entityProps.updatedAt = new Date();
 	}
 }

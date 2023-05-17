@@ -14,10 +14,8 @@
     <summary>Quais as entidades do domínio?</summary>
     <ul>
       <li>Produto</li>
+      <li>Compra/Venda</li>
       <li>Notificação</li>
-      <li>Estoque</li>
-      <li>Compra</li>
-      <li>Venda</li>
     </ul>
 </details>
 
@@ -36,6 +34,8 @@
 
 - `[ ]` Não deve ser possível cadastrar dois produtos iguais
 - `[ ]` Não deve ser possível comprar um produto inexistente
+- `[ ]` Não deve ser possível comprar 0 unidades de um produto
+- `[ ]` Não deve ser possível vender 0 unidades de um produto
 - `[ ]` Não deve ser possível definir um limite mínimo de estoque 0
 
 ## Requisitos não-funcionais (técnicos)
