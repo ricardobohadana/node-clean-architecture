@@ -13,6 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "@faker-js/faker": "^8.0.1",
+    "@rocketseat/eslint-config": "^1.2.0",
     "@types/node": "^20.1.7",
     "@typescript-eslint/eslint-plugin": "^5.59.6",
     "@typescript-eslint/parser": "^5.59.6",
@@ -22,6 +23,7 @@
     "tsup": "^6.7.0",
     "tsx": "^3.12.7",
     "typescript": "^5.0.4",
-    "vitest": "^0.31.0"
+    "vitest": "^0.31.0",
+    "vitest-mock-extended": "^1.1.3"
   }
 }
