@@ -1,4 +1,5 @@
 import { Product } from '../entities/product'
+import { DuplicateEntityError } from '../errors/duplicate-entity.error'
 import { InvalidPriceError } from '../errors/invalid-price.error'
 import { IProductRepository } from '../interfaces/product.repository'
 
@@ -10,9 +11,8 @@ export class CreateProductUseCase {
 
     const product = new Product({ name, price })
     const productWithSameName = await this.productRepository.getProductByName(name)
-    console.log(productWithSameName)
 
-    if (productWithSameName && product.equals(productWithSameName)) throw new Error()
+    if (productWithSameName && product.equals(productWithSameName)) throw new DuplicateEntityError()
 
     return product
   }

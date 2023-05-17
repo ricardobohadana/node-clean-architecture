@@ -5,6 +5,7 @@ import { InvalidPriceError } from '../../src/domain/errors/invalid-price.error'
 import { IProductRepository } from '../../src/domain/interfaces/product.repository'
 import { mock } from 'vitest-mock-extended'
 import { Product } from '../../src/domain/entities/product'
+import { DuplicateEntityError } from '../../src/domain/errors/duplicate-entity.error'
 
 describe('Create product unit tests', () => {
   let sutUseCase: CreateProductUseCase
@@ -45,6 +46,8 @@ describe('Create product unit tests', () => {
     productRepository.getProductByName.mockImplementation(
       async () => await new Product(productData),
     )
-    expect(async () => await sutUseCase.execute(productData)).rejects.toBeInstanceOf(Error)
+    expect(async () => await sutUseCase.execute(productData)).rejects.toBeInstanceOf(
+      DuplicateEntityError,
+    )
   })
 })
