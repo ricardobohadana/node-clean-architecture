@@ -14,6 +14,7 @@ export class CreateProductUseCase {
 
     if (productWithSameName && product.equals(productWithSameName)) throw new DuplicateEntityError()
 
+    this.productRepository.save(product)
     return product
   }
 }
