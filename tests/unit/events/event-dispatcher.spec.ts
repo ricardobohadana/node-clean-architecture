@@ -1,11 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { EventDispatcher } from '../../../src/events/event-dispatcher'
-import { ProductSoldEventHandler } from '../../../src/events/handlers/product-sold-event.handler'
-import { IProductRepository } from '../../../src/domain/interfaces/product.repository'
+import { IProductRepository } from '../../../src/domain/interfaces/repositories/product.repository'
 import { MockProxy, mock } from 'vitest-mock-extended'
-import { DomainEvents } from '../../../src/domain/events/interfaces/domain-events'
-import { ProductSoldEvent } from '../../../src/domain/events/domain-events/product-sold.event'
-import { randomUUID } from 'crypto'
+import { Product } from '../../../src/domain/entities/product'
+import { faker } from '@faker-js/faker'
+import { Transaction } from '../../../src/domain/entities/transaction'
+import { TransactionTypeEnum } from '../../../src/domain/enums/transaction-type'
+import { TransactionCreatedProductEventHandler } from '../../../src/events/handlers/transaction-created-event/product.handler'
+import { TransactionCreatedEvent } from '../../../src/domain/events/transaction-created.event'
+import { DomainEvents } from '../../../src/domain/interfaces/events/domain-events'
 
 describe('Domain event tests', () => {
   let productRepository: MockProxy<IProductRepository>
@@ -16,29 +19,39 @@ describe('Domain event tests', () => {
 
   it('should be able to register an event', () => {
     const eventDispatcher = new EventDispatcher()
-    const eventHandler = new ProductSoldEventHandler(productRepository)
+    const eventHandler = new TransactionCreatedProductEventHandler(productRepository)
 
-    eventDispatcher.register(DomainEvents.PRODUCT_SOLD_EVENT, eventHandler)
+    eventDispatcher.register(DomainEvents.TRANSACTION_CREATED_EVENT, eventHandler)
 
-    expect(eventDispatcher.eventMapping[DomainEvents.PRODUCT_SOLD_EVENT]).toBeDefined()
-    expect(eventDispatcher.eventMapping[DomainEvents.PRODUCT_SOLD_EVENT]).toHaveLength(1)
+    expect(eventDispatcher.eventMapping[DomainEvents.TRANSACTION_CREATED_EVENT]).toBeDefined()
+    expect(eventDispatcher.eventMapping[DomainEvents.TRANSACTION_CREATED_EVENT]).toHaveLength(1)
   })
 
   it('should be able to dispatch an event', async () => {
     const eventDispatcher = new EventDispatcher()
-    const eventHandler = new ProductSoldEventHandler(productRepository)
+    const eventHandler = new TransactionCreatedProductEventHandler(productRepository)
     const spyEventHandler = vi.spyOn(eventHandler, 'execute')
 
-    eventDispatcher.register(DomainEvents.PRODUCT_SOLD_EVENT, eventHandler)
+    eventDispatcher.register(DomainEvents.TRANSACTION_CREATED_EVENT, eventHandler)
 
-    const productSoldEvent = new ProductSoldEvent({
-      inStockAmount: 10,
-      productId: randomUUID(),
-      soldAmount: 5,
+    const product = new Product({
+      name: faker.commerce.product(),
+      price: 199.99,
+      inStockAmount: 100,
+    })
+    const transaction = new Transaction({
+      amount: 10,
+      productId: product.id,
+      transactionDate: new Date(),
+      type: TransactionTypeEnum.SALE,
+    })
+    const transactionCreatedEvent = new TransactionCreatedEvent({
+      product,
+      transaction,
     })
 
-    await eventDispatcher.dispatch(productSoldEvent)
+    await eventDispatcher.dispatch(transactionCreatedEvent)
 
-    expect(spyEventHandler).toHaveBeenCalled()
+    expect(spyEventHandler).toHaveBeenCalledOnce()
   })
 })

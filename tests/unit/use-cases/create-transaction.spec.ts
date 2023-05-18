@@ -4,29 +4,36 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { CreateTransactionUseCase } from '../../../src/domain/use-cases/create-transaction'
 import { TransactionTypeEnum } from '../../../src/domain/enums/transaction-type'
 import { MockProxy, mock } from 'vitest-mock-extended'
-import { ITransactionRepository } from '../../../src/domain/interfaces/transaction.repository'
 import { InvalidTransactionAmountError } from '../../../src/domain/errors/invalid-transaction-amount.error'
 import { InvalidTransactionDateError } from '../../../src/domain/errors/invalid-transaction-date.error'
 import { ProductDoesNotExistError } from '../../../src/domain/errors/product-does-not-exist.error'
-import { IProductRepository } from '../../../src/domain/interfaces/product.repository'
+import { IProductRepository } from '../../../src/domain/interfaces/repositories/product.repository'
 import { Product } from '../../../src/domain/entities/product'
 import { NotEnoughStockError } from '../../../src/domain/errors/not-enough-stock.error'
+import { ITransactionRepository } from '../../../src/domain/interfaces/repositories/transaction.repository'
+import { IEventDispatcher } from '../../../src/domain/interfaces/events/event-dispatcher'
 
 describe('Create transaction use case', () => {
   let transactionRepository: MockProxy<ITransactionRepository>
   let productRepository: MockProxy<IProductRepository>
   let sutUseCase: CreateTransactionUseCase
+  let eventDispatcher: MockProxy<IEventDispatcher>
 
   beforeEach(() => {
     transactionRepository = mock<ITransactionRepository>()
     productRepository = mock<IProductRepository>()
+    eventDispatcher = mock<IEventDispatcher>()
     productRepository.getProductById.mockImplementation(async (id) =>
       id !== '0'
         ? new Product({ name: faker.commerce.product(), price: 199.99, inStockAmount: 10 })
         : null,
     )
 
-    sutUseCase = new CreateTransactionUseCase(transactionRepository, productRepository)
+    sutUseCase = new CreateTransactionUseCase(
+      transactionRepository,
+      productRepository,
+      eventDispatcher,
+    )
   })
 
   it('should be able to create a transaction', async () => {

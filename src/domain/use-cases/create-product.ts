@@ -1,7 +1,7 @@
 import { Product } from '../entities/product'
 import { DuplicateEntityError } from '../errors/duplicate-entity.error'
 import { InvalidPriceError } from '../errors/invalid-price.error'
-import { IProductRepository } from '../interfaces/product.repository'
+import { IProductRepository } from '../interfaces/repositories/product.repository'
 
 export class CreateProductUseCase {
   constructor(private readonly productRepository: IProductRepository) {}

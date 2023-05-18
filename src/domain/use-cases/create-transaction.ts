@@ -4,13 +4,16 @@ import { InvalidTransactionAmountError } from '../errors/invalid-transaction-amo
 import { InvalidTransactionDateError } from '../errors/invalid-transaction-date.error'
 import { NotEnoughStockError } from '../errors/not-enough-stock.error'
 import { ProductDoesNotExistError } from '../errors/product-does-not-exist.error'
-import { IProductRepository } from '../interfaces/product.repository'
-import { ITransactionRepository } from '../interfaces/transaction.repository'
+import { TransactionCreatedEvent } from '../events/transaction-created.event'
+import { IEventDispatcher } from '../interfaces/events/event-dispatcher'
+import { IProductRepository } from '../interfaces/repositories/product.repository'
+import { ITransactionRepository } from '../interfaces/repositories/transaction.repository'
 
 export class CreateTransactionUseCase {
   constructor(
     private readonly transactionRepository: ITransactionRepository,
     private readonly productRepository: IProductRepository,
+    private readonly eventDispatcher: IEventDispatcher,
   ) {}
 
   async execute(data: {
@@ -29,7 +32,21 @@ export class CreateTransactionUseCase {
     if (product.inStockAmount < data.amount) throw new NotEnoughStockError()
 
     const transaction = new Transaction(data)
-    this.transactionRepository.save(transaction)
+
+    await this.transactionRepository.save(transaction)
+
+    // event
+    const transactionCreatedEvent = new TransactionCreatedEvent({
+      product,
+      transaction,
+    })
+    // const createNotificationEvent = new CreateNotificationEvent({
+    //   product,
+    //   transaction,
+    // })
+    await this.eventDispatcher.dispatch(transactionCreatedEvent)
+    // await this.eventDispatcher.dispatch(createNotificationEvent)
+
     return transaction
   }
 }
