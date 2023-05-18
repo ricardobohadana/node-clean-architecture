@@ -10,6 +10,7 @@ import { InvalidTransactionDateError } from '../../src/domain/errors/invalid-tra
 import { ProductDoesNotExistError } from '../../src/domain/errors/product-does-not-exist.error'
 import { IProductRepository } from '../../src/domain/interfaces/product.repository'
 import { Product } from '../../src/domain/entities/product'
+import { NotEnoughStockError } from '../../src/domain/errors/not-enough-stock.error'
 
 describe('Create transaction use case', () => {
   let transactionRepository: MockProxy<ITransactionRepository>
@@ -20,7 +21,9 @@ describe('Create transaction use case', () => {
     transactionRepository = mock<ITransactionRepository>()
     productRepository = mock<IProductRepository>()
     productRepository.getProductById.mockImplementation(async (id) =>
-      id !== '0' ? new Product({ name: faker.commerce.product(), price: 199.99 }) : null,
+      id !== '0'
+        ? new Product({ name: faker.commerce.product(), price: 199.99, inStockAmount: 10 })
+        : null,
     )
 
     sutUseCase = new CreateTransactionUseCase(transactionRepository, productRepository)
@@ -29,7 +32,7 @@ describe('Create transaction use case', () => {
   it('should be able to create a transaction', async () => {
     const transactionData = {
       productId: randomUUID() as string,
-      amount: faker.number.int({ min: 1, max: 100 }),
+      amount: faker.number.int({ min: 1, max: 10 }),
       type: [TransactionTypeEnum.PURCHASE, TransactionTypeEnum.SALE][
         faker.number.int({ min: 0, max: 1 })
       ],
@@ -43,10 +46,24 @@ describe('Create transaction use case', () => {
     expect(transactionRepository.save).toHaveBeenCalledOnce()
   })
 
+  it('should not be able to create a SALE transaction for a product without enough stock amount', async () => {
+    const transactionData = {
+      productId: randomUUID(),
+      amount: faker.number.int({ min: 11, max: 100 }),
+      type: TransactionTypeEnum.SALE,
+      transactionDate: faker.date.past(),
+    }
+
+    await expect(async () => await sutUseCase.execute(transactionData)).rejects.toBeInstanceOf(
+      NotEnoughStockError,
+    )
+    expect(transactionRepository.save).not.toHaveBeenCalledOnce()
+  })
+
   it('should not be able to create a transaction for an unexisting product', async () => {
     const transactionData = {
       productId: '0',
-      amount: faker.number.int({ min: 1, max: 100 }),
+      amount: faker.number.int({ min: 1, max: 10 }),
       type: [TransactionTypeEnum.PURCHASE, TransactionTypeEnum.SALE][
         faker.number.int({ min: 0, max: 1 })
       ],
@@ -78,7 +95,7 @@ describe('Create transaction use case', () => {
   it('should not be able to create a transaction with a future date', async () => {
     const transactionData = {
       productId: randomUUID() as string,
-      amount: faker.number.int({ min: 1, max: 100 }),
+      amount: faker.number.int({ min: 1, max: 10 }),
       type: [TransactionTypeEnum.PURCHASE, TransactionTypeEnum.SALE][
         faker.number.int({ min: 0, max: 1 })
       ],

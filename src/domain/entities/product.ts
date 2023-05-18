@@ -1,3 +1,4 @@
+import { Optional } from '../@types/optional'
 import { BaseEntityProps, Entity } from './base/entity'
 
 export type ProductProps = {
@@ -39,7 +40,7 @@ export class Product extends Entity<ProductProps> {
     createdAt,
     updatedAt,
     ...props
-  }: Omit<ProductProps, 'inStockAmount'> & BaseEntityProps) {
+  }: Optional<ProductProps, 'inStockAmount'> & BaseEntityProps) {
     super({
       entityProps: {
         id,
@@ -48,7 +49,7 @@ export class Product extends Entity<ProductProps> {
       },
       props: {
         ...props,
-        inStockAmount: 0,
+        inStockAmount: props.inStockAmount ?? 0,
       },
     })
   }

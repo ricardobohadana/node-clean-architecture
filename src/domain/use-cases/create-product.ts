@@ -9,6 +9,7 @@ export class CreateProductUseCase {
   async execute(data: {
     name: string
     price: number
+    inStockAmount?: number
     size?: string
     color?: string
     notificationLimit?: number
