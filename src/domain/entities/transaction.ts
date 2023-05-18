@@ -7,6 +7,7 @@ export type TransactionProps = {
   type: TransactionTypeEnum
   transactionDate: Date
 }
+export type TransactionConstructorProps = TransactionProps & BaseEntityProps
 
 export class Transaction extends Entity<TransactionProps> {
   get productId() {
@@ -25,7 +26,7 @@ export class Transaction extends Entity<TransactionProps> {
     return this.props.transactionDate
   }
 
-  constructor({ id, createdAt, updatedAt, ...props }: TransactionProps & BaseEntityProps) {
+  constructor({ id, createdAt, updatedAt, ...props }: TransactionConstructorProps) {
     super({
       props,
       entityProps: {

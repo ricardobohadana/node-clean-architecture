@@ -1,4 +1,4 @@
-import {type Optional} from '../@types/optional';
+import {type Optional} from '../../@types/optional';
 import {type BaseEntityProps, Entity, type EntityProps} from './base/entity';
 
 export type NotificationProps = {

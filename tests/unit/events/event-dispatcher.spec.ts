@@ -9,12 +9,16 @@ import { TransactionTypeEnum } from '../../../src/domain/enums/transaction-type'
 import { TransactionCreatedProductEventHandler } from '../../../src/events/handlers/transaction-created-event/product.handler'
 import { TransactionCreatedEvent } from '../../../src/domain/events/transaction-created.event'
 import { DomainEvents } from '../../../src/domain/interfaces/events/domain-events'
+import { TransactionCreatedNotificationEventHandler } from '../../../src/events/handlers/transaction-created-event/notification.handler'
+import { INotificationRepository } from '../../../src/domain/interfaces/repositories/notification.repository'
 
 describe('Domain event tests', () => {
   let productRepository: MockProxy<IProductRepository>
+  let notificationRepository: MockProxy<INotificationRepository>
 
   beforeEach(() => {
     productRepository = mock<IProductRepository>()
+    notificationRepository = mock<INotificationRepository>()
   })
 
   it('should be able to register an event', () => {
@@ -29,10 +33,18 @@ describe('Domain event tests', () => {
 
   it('should be able to dispatch an event', async () => {
     const eventDispatcher = new EventDispatcher()
-    const eventHandler = new TransactionCreatedProductEventHandler(productRepository)
-    const spyEventHandler = vi.spyOn(eventHandler, 'execute')
+    const productHandler = new TransactionCreatedProductEventHandler(productRepository)
+    const notificationHandler = new TransactionCreatedNotificationEventHandler(
+      notificationRepository,
+    )
+    const spyProductHandler = vi.spyOn(productHandler, 'execute')
+    const spyNotificationHandler = vi.spyOn(notificationHandler, 'execute')
 
-    eventDispatcher.register(DomainEvents.TRANSACTION_CREATED_EVENT, eventHandler)
+    eventDispatcher.register(DomainEvents.TRANSACTION_CREATED_EVENT, productHandler)
+    eventDispatcher.register(DomainEvents.TRANSACTION_CREATED_EVENT, notificationHandler)
+
+    expect(eventDispatcher.eventMapping[DomainEvents.TRANSACTION_CREATED_EVENT]).toBeDefined()
+    expect(eventDispatcher.eventMapping[DomainEvents.TRANSACTION_CREATED_EVENT]).toHaveLength(2)
 
     const product = new Product({
       name: faker.commerce.product(),
@@ -52,6 +64,7 @@ describe('Domain event tests', () => {
 
     await eventDispatcher.dispatch(transactionCreatedEvent)
 
-    expect(spyEventHandler).toHaveBeenCalledOnce()
+    expect(spyProductHandler).toHaveBeenCalledOnce()
+    expect(spyNotificationHandler).toHaveBeenCalledOnce()
   })
 })

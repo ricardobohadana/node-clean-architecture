@@ -1,4 +1,4 @@
-import { Optional } from '../@types/optional'
+import { Optional } from '../../@types/optional'
 import { BaseEntityProps, Entity } from './base/entity'
 
 export type ProductProps = {
@@ -9,6 +9,8 @@ export type ProductProps = {
   color?: string
   notificationLimit?: number
 }
+
+export type ProductConstructorProps = Optional<ProductProps, 'inStockAmount'> & BaseEntityProps
 
 export class Product extends Entity<ProductProps> {
   get name() {
@@ -23,6 +25,11 @@ export class Product extends Entity<ProductProps> {
     return this.props.inStockAmount
   }
 
+  set inStockAmount(value) {
+    if (value < 0) throw new Error()
+    this.props.inStockAmount = value
+  }
+
   get size() {
     return this.props.size
   }
@@ -35,12 +42,7 @@ export class Product extends Entity<ProductProps> {
     return this.props.notificationLimit
   }
 
-  constructor({
-    id,
-    createdAt,
-    updatedAt,
-    ...props
-  }: Optional<ProductProps, 'inStockAmount'> & BaseEntityProps) {
+  constructor({ id, createdAt, updatedAt, ...props }: ProductConstructorProps) {
     super({
       entityProps: {
         id,

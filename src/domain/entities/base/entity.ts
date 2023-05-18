@@ -1,5 +1,5 @@
 import {randomUUID, type UUID} from 'crypto';
-import {type Optional} from '../../@types/optional';
+import {type Optional} from '../../../@types/optional';
 
 export type EntityProps = {
 	id: string;
