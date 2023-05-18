@@ -6,11 +6,17 @@ import { IProductRepository } from '../interfaces/product.repository'
 export class CreateProductUseCase {
   constructor(private readonly productRepository: IProductRepository) {}
 
-  async execute({ name, price }: { name: string; price: number }) {
-    if (price <= 0) throw new InvalidPriceError()
+  async execute(data: {
+    name: string
+    price: number
+    size?: string
+    color?: string
+    notificationLimit?: number
+  }) {
+    if (data.price <= 0) throw new InvalidPriceError()
 
-    const product = new Product({ name, price })
-    const productWithSameName = await this.productRepository.getProductByName(name)
+    const product = new Product(data)
+    const productWithSameName = await this.productRepository.getProductByName(data.name)
 
     if (productWithSameName && product.equals(productWithSameName)) throw new DuplicateEntityError()
 

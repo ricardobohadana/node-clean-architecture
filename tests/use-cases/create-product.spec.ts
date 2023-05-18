@@ -28,6 +28,25 @@ describe('Create product unit tests', () => {
     expect(productRepository.save).toHaveBeenCalledOnce()
   })
 
+  it('should be able to create a product with all properties', async () => {
+    const productData = {
+      name: faker.commerce.product(),
+      price: Number(faker.commerce.price()),
+      size: 'Large',
+      color: 'purple',
+      notificationLimit: 10,
+    }
+
+    const product = await sutUseCase.execute(productData)
+
+    expect(product.id).toBeTruthy()
+    expect(product.inStockAmount).toEqual(0)
+    expect(product.size).toEqual(productData.size)
+    expect(product.color).toEqual(productData.color)
+    expect(product.notificationLimit).toEqual(productData.notificationLimit)
+    expect(productRepository.save).toHaveBeenCalledOnce()
+  })
+
   it('should not be able to create a product with price <= 0', async () => {
     const productData = {
       name: faker.commerce.product(),

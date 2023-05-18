@@ -7,14 +7,23 @@ import { MockProxy, mock } from 'vitest-mock-extended'
 import { ITransactionRepository } from '../../src/domain/interfaces/transaction.repository'
 import { InvalidTransactionAmountError } from '../../src/domain/errors/invalid-transaction-amount.error'
 import { InvalidTransactionDateError } from '../../src/domain/errors/invalid-transaction-date.error'
+import { ProductDoesNotExistError } from '../../src/domain/errors/product-does-not-exist.error'
+import { IProductRepository } from '../../src/domain/interfaces/product.repository'
+import { Product } from '../../src/domain/entities/product'
 
 describe('Create transaction use case', () => {
   let transactionRepository: MockProxy<ITransactionRepository>
+  let productRepository: MockProxy<IProductRepository>
   let sutUseCase: CreateTransactionUseCase
 
   beforeEach(() => {
     transactionRepository = mock<ITransactionRepository>()
-    sutUseCase = new CreateTransactionUseCase(transactionRepository)
+    productRepository = mock<IProductRepository>()
+    productRepository.getProductById.mockImplementation(async (id) =>
+      id !== '0' ? new Product({ name: faker.commerce.product(), price: 199.99 }) : null,
+    )
+
+    sutUseCase = new CreateTransactionUseCase(transactionRepository, productRepository)
   })
 
   it('should be able to create a transaction', async () => {
@@ -34,7 +43,23 @@ describe('Create transaction use case', () => {
     expect(transactionRepository.save).toHaveBeenCalledOnce()
   })
 
-  it('should not be able to create a with amount <= 0', async () => {
+  it('should not be able to create a transaction for an unexisting product', async () => {
+    const transactionData = {
+      productId: '0',
+      amount: faker.number.int({ min: 1, max: 100 }),
+      type: [TransactionTypeEnum.PURCHASE, TransactionTypeEnum.SALE][
+        faker.number.int({ min: 0, max: 1 })
+      ],
+      transactionDate: faker.date.past(),
+    }
+
+    await expect(async () => await sutUseCase.execute(transactionData)).rejects.toBeInstanceOf(
+      ProductDoesNotExistError,
+    )
+    expect(transactionRepository.save).not.toHaveBeenCalledOnce()
+  })
+
+  it('should not be able to create a transaction with amount <= 0', async () => {
     const transactionData = {
       productId: randomUUID() as string,
       amount: faker.number.int({ min: -10, max: 0 }),

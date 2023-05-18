@@ -23,8 +23,8 @@
 
 - `[✅]` Deve ser possível cadastrar um produto
 - `[ ]` Deve ser possível obter os produtos cadastrados
-- `[ ]` Deve ser possível registrar uma compra
-- `[ ]` Deve ser possível registrar uma venda
+- `[✅]` Deve ser possível registrar uma compra
+- `[✅]` Deve ser possível registrar uma venda
 - `[ ]` Deve ser possível definir (ou alterar) um limite mínimo de estoque para alerta
 - `[ ]` Deve ser possível visualizar o histórico de compra e venda de um produto
 - `[ ]` Deve ser possível visualizar as notificações do sistema
@@ -35,7 +35,8 @@
 - `[✅]` Não deve ser possível cadastrar dois produtos iguais
 - `[✅]` Não deve ser possível cadastrar um produto com preço <= 0
 - `[ ]` Não deve ser possível comprar um produto inexistente
-- `[ ]` Não deve ser possível comprar 0 unidades de um produto
+- `[✅]` Não deve ser possível comprar 0 unidades de um produto
+- `[✅]` Não deve ser possível cadastrar uma compra/venda futura
 - `[ ]` Não deve ser possível vender 0 unidades de um produto
 - `[ ]` Não deve ser possível definir um limite mínimo de estoque 0
 
@@ -50,8 +51,8 @@
   <summary>Quais as ações (casos de uso) que essa aplicação deve ter?</summary>
     <ul>
       <li>[✅] Criar produto</li>
-      <li>[  ] Comprar produto</li>
-      <li>[  ] Vender produto</li>
+      <li>[✅] Comprar produto</li>
+      <li>[✅] Vender produto</li>
       <li>[  ] Pegar lista de produtos cadastrados</li>
       <li>[  ] Definir limite mínimo de estoque para um produto</li>
       <li>[  ] Visualizar historico de compra e venda de um produto</li>
