@@ -1,21 +1,18 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { MockProxy, mock } from 'vitest-mock-extended'
-import { INotificationRepository } from '../../../../src/domain/interfaces/repositories/notification.repository'
-import { IProductRepository } from '../../../../src/domain/interfaces/repositories/product.repository'
-import { IEventDispatcher } from '../../../../src/domain/interfaces/events/event-dispatcher'
-import { EventDispatcher } from '../../../../src/events/event-dispatcher'
-import { TransactionCreatedProductEventHandler } from '../../../../src/events/handlers/transaction-created-event/product.handler'
-import { DomainEvents } from '../../../../src/domain/interfaces/events/domain-events'
-import { Product, ProductConstructorProps } from '../../../../src/domain/entities/product'
+import { INotificationRepository } from '@/domain/interfaces/repositories/notification.repository'
+import { IProductRepository } from '@/domain/interfaces/repositories/product.repository'
+import { IEventDispatcher } from '@/domain/interfaces/events/event-dispatcher'
+import { EventDispatcher } from '@/events/event-dispatcher'
+import { TransactionCreatedProductEventHandler } from '@/events/handlers/transaction-created-event/product.handler'
+import { DomainEvents } from '@/domain/interfaces/events/domain-events'
+import { Product, ProductConstructorProps } from '@/domain/entities/product'
 import { faker } from '@faker-js/faker'
-import {
-  Transaction,
-  TransactionConstructorProps,
-} from '../../../../src/domain/entities/transaction'
+import { Transaction, TransactionConstructorProps } from '@/domain/entities/transaction'
 import { randomUUID } from 'crypto'
-import { TransactionTypeEnum } from '../../../../src/domain/enums/transaction-type'
-import { TransactionCreatedEvent } from '../../../../src/domain/events/transaction-created.event'
-import { TransactionCreatedNotificationEventHandler } from '../../../../src/events/handlers/transaction-created-event/notification.handler'
+import { TransactionTypeEnum } from '@/domain/enums/transaction-type'
+import { TransactionCreatedEvent } from '@/domain/events/transaction-created.event'
+import { TransactionCreatedNotificationEventHandler } from '@/events/handlers/transaction-created-event/notification.handler'
 
 describe('Transaction Created Event Handlers test', () => {
   let productRepository: MockProxy<IProductRepository>
