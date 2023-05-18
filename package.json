@@ -4,8 +4,8 @@
   "description": "1. Rodar script de criação de pacote: `npm init -y` 2. Instalar dependências de desenvolvimento para utilização do typescript:",
   "main": "index.js",
   "scripts": {
-    "test": "vitest run --dir tests/use-cases",
-    "test:watch": "vitest --dir tests/use-cases",
+    "test": "vitest run --dir tests/unit",
+    "test:watch": "vitest --dir tests/unit",
     "test:coverage": "vitest --coverage"
   },
   "keywords": [],

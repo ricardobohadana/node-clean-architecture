@@ -34,10 +34,10 @@
 
 - `[✅]` Não deve ser possível cadastrar dois produtos iguais
 - `[✅]` Não deve ser possível cadastrar um produto com preço <= 0
-- `[ ]` Não deve ser possível comprar um produto inexistente
-- `[✅]` Não deve ser possível comprar 0 unidades de um produto
+- `[✅]` Não deve ser possível comprar um produto inexistente
+- `[✅]` Não deve ser possível comprar/vender 0 unidades de um produto
 - `[✅]` Não deve ser possível cadastrar uma compra/venda futura
-- `[ ]` Não deve ser possível vender 0 unidades de um produto
+- `[✅]` Não deve ser possível vender uma quantidade maior do que o estoque
 - `[ ]` Não deve ser possível definir um limite mínimo de estoque 0
 
 ## Requisitos não-funcionais (técnicos)

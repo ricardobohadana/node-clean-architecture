@@ -1,11 +1,11 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { faker } from '@faker-js/faker/locale/pt_BR'
-import { CreateProductUseCase } from '../../src/domain/use-cases/create-product'
-import { InvalidPriceError } from '../../src/domain/errors/invalid-price.error'
-import { IProductRepository } from '../../src/domain/interfaces/product.repository'
+import { CreateProductUseCase } from '../../../src/domain/use-cases/create-product'
+import { InvalidPriceError } from '../../../src/domain/errors/invalid-price.error'
+import { IProductRepository } from '../../../src/domain/interfaces/product.repository'
 import { MockProxy, mock } from 'vitest-mock-extended'
-import { Product } from '../../src/domain/entities/product'
-import { DuplicateEntityError } from '../../src/domain/errors/duplicate-entity.error'
+import { Product } from '../../../src/domain/entities/product'
+import { DuplicateEntityError } from '../../../src/domain/errors/duplicate-entity.error'
 
 describe('Create product unit tests', () => {
   let sutUseCase: CreateProductUseCase
