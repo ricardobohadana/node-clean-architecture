@@ -5,7 +5,7 @@ import { EventDispatcher } from '../domain/application/dispatcher/event-dispatch
 import { ShouldSendNotificationHandler } from '../domain/application/handlers/notification.handler'
 import { UpdateStockHandler } from '../domain/application/handlers/update-stock.handler'
 
-export class RegisterEvents {
+class RegisterEvents {
   constructor(
     private readonly productRepository: IProductRepository,
     private readonly notificationRepository: INotificationRepository,

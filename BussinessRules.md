@@ -28,7 +28,7 @@
 - `[✅]` Deve ser possível alterar um limite mínimo de estoque para alerta
 - `[✅]` Deve ser possível definir um limite mínimo de estoque para alerta de um produto
 - `[✅]` Deve ser possível receber uma notificação caso o estoque de um produto fique <= limite mínimo
-- `[ ]` Deve ser possível visualizar o histórico de compra e venda de um produto
+- `[✅]` Deve ser possível visualizar o histórico de compra e venda de um produto
 - `[ ]` Deve ser possível visualizar as notificações do sistema
 - `[ ]` Deve ser possível visualizar produtos notificados
 
@@ -46,6 +46,8 @@
 
 - `[ ]` A listagem de produtos deve conter paginação
 - `[ ]` A listagem de produtos deve conter filtros opcionais
+- `[✅]` O histórico de transações deve conter paginação
+- `[✅]` A históricod e transações deve conter filtros opcionais
 
 ## Casos de uso
 
