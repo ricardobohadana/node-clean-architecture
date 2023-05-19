@@ -25,9 +25,13 @@ describe('Transaction Created Event Handlers test', () => {
   let productProps: ProductConstructorProps
   let transactionProps: TransactionConstructorProps
 
+  let product: Product
+
   beforeEach(() => {
     notificationRepository = mock<INotificationRepository>()
     productRepository = mock<IProductRepository>()
+    productRepository.update.mockImplementation(async (data) => {})
+    notificationRepository.create.mockImplementation(async (notification) => {})
     eventDispatcher = new EventDispatcher()
     sutProductHandler = new UpdateStockHandler(productRepository)
     sutNotificationHandler = new ShouldSendNotificationHandler(notificationRepository)
@@ -40,7 +44,11 @@ describe('Transaction Created Event Handlers test', () => {
       price: 99,
       inStockAmount: 100,
       notificationLimit: 20,
+      createdAt: faker.date.past(),
+      updatedAt: faker.date.past(),
     }
+
+    product = new Product(productProps)
 
     transactionProps = {
       productId: productProps.id!,
@@ -51,46 +59,36 @@ describe('Transaction Created Event Handlers test', () => {
   })
 
   it('should process a SALE correctly by updating the stock', async () => {
-    productRepository.updateStock.mockImplementation(async (data) => {
-      product.inStockAmount = data.inStockAmount
-    })
-
-    const product = new Product(productProps)
     const transaction = new Transaction(transactionProps)
 
     event = new TransactionCreatedEvent({ transaction, product })
 
-    const productRepoSpy = vi.spyOn(productRepository, 'updateStock')
+    const productRepoSpy = vi.spyOn(productRepository, 'update')
 
     await eventDispatcher.dispatch(event)
 
     expect(productRepoSpy).toHaveBeenCalledOnce()
     expect(product.inStockAmount).toEqual(productProps.inStockAmount! - transactionProps.amount)
+    expect(product.updatedAt).toBeDefined()
+    expect(product.updatedAt).not.toEqual(product.createdAt)
   })
 
   it('should process a PURCHASE correctly by updating the stock', async () => {
-    productRepository.updateStock.mockImplementation(async (data) => {
-      product.inStockAmount = data.inStockAmount
-    })
-
-    const product = new Product(productProps)
     const transaction = new Transaction({ ...transactionProps, type: TransactionTypeEnum.PURCHASE })
 
     event = new TransactionCreatedEvent({ transaction, product })
 
-    const productRepoSpy = vi.spyOn(productRepository, 'updateStock')
+    const productRepoSpy = vi.spyOn(productRepository, 'update')
 
     await eventDispatcher.dispatch(event)
 
     expect(productRepoSpy).toHaveBeenCalledOnce()
     expect(product.inStockAmount).toEqual(productProps.inStockAmount! + transactionProps.amount)
+    expect(product.updatedAt).toBeDefined()
+    expect(product.updatedAt).not.toEqual(product.createdAt)
   })
 
   it('should process the NotificationEvent by creating a notification', async () => {
-    productRepository.updateStock.mockImplementation(async (data) => {})
-    notificationRepository.create.mockImplementation(async (notification) => {})
-
-    const product = new Product(productProps)
     const transaction = new Transaction(transactionProps)
 
     event = new TransactionCreatedEvent({ transaction, product })
@@ -103,10 +101,6 @@ describe('Transaction Created Event Handlers test', () => {
   })
 
   it('should process the NotificationEvent by not creating a notification (PURCHASE)', async () => {
-    productRepository.updateStock.mockImplementation(async (data) => {})
-    notificationRepository.create.mockImplementation(async (notification) => {})
-
-    const product = new Product(productProps)
     const transaction = new Transaction({ ...transactionProps, type: TransactionTypeEnum.PURCHASE })
 
     event = new TransactionCreatedEvent({ transaction, product })
@@ -119,10 +113,8 @@ describe('Transaction Created Event Handlers test', () => {
   })
 
   it('should process the NotificationEvent by not creating a notification (did not hit stockLimit)', async () => {
-    productRepository.updateStock.mockImplementation(async (data) => {})
     notificationRepository.create.mockImplementation(async (notification) => {})
 
-    const product = new Product(productProps)
     const transaction = new Transaction({ ...transactionProps, amount: 2 })
 
     event = new TransactionCreatedEvent({ transaction, product })

@@ -19,9 +19,6 @@ export class GetTransactionHistoryUseCase {
       take,
     })
 
-    if (type && transactions.every((t) => t.type !== type))
-      throw new EvalError('Wrong query results')
-
     return { transactions }
   }
 }

@@ -10,4 +10,5 @@ export interface INotificationRepository {
     readAt?: boolean
   }): Promise<Notification[]>
   create(notification: Notification): Promise<void>
+  get(id: string): Promise<Notification | null>
 }

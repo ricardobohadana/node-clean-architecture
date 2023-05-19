@@ -1,4 +1,5 @@
 import { Optional } from '../../@types/optional'
+import { InvalidTransactionAmountError } from '../application/errors/invalid-transaction-amount.error'
 import { BaseEntityProps, Entity } from './base/entity'
 
 export type ProductProps = {
@@ -13,13 +14,20 @@ export type ProductProps = {
 export type ProductConstructorProps = Optional<ProductProps, 'inStockAmount'> & BaseEntityProps
 
 export class Product extends Entity<ProductProps> {
-  set inStockAmount(value) {
-    if (value < 0) throw new Error()
-    this.props.inStockAmount = value
+  processPurchase(units: number) {
+    this.props.inStockAmount += units
+    this.touch()
+  }
+
+  processSale(units: number) {
+    if (units > this.props.inStockAmount) throw new InvalidTransactionAmountError()
+    this.props.inStockAmount -= units
+    this.touch()
   }
 
   set notificationLimit(value) {
     this.props.notificationLimit = value
+    this.touch()
   }
 
   get name() {

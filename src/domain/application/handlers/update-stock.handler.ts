@@ -8,14 +8,14 @@ export class UpdateStockHandler implements IEventHandler<TransactionCreatedEvent
   constructor(private readonly productRepository: IProductRepository) {}
 
   async execute({
-    data: { transaction, product },
+    data: {
+      transaction: { type, amount },
+      product,
+    },
   }: IEvent<TransactionCreatedEventProps>): Promise<void> {
-    let inStockAmount: number
+    if (type === TransactionTypeEnum.SALE) product.processSale(amount)
+    else product.processPurchase(amount)
 
-    if (transaction.type === TransactionTypeEnum.SALE)
-      inStockAmount = product.inStockAmount - transaction.amount
-    else inStockAmount = product.inStockAmount + transaction.amount
-
-    await this.productRepository.updateStock({ id: product.id, inStockAmount })
+    await this.productRepository.update(product)
   }
 }

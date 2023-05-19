@@ -27,5 +27,6 @@ export class Notification extends Entity<NotificationProps> {
 
   read() {
     this.props.readAt = new Date()
+    this.touch()
   }
 }
