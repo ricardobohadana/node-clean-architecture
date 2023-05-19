@@ -1,6 +1,6 @@
-import { IEvent } from '../domain/interfaces/events/event'
-import { IEventDispatcher } from '../domain/interfaces/events/event-dispatcher'
-import { IEventHandler } from '../domain/interfaces/events/event-handler'
+import { IEvent } from '../../interfaces/events/event'
+import { IEventDispatcher } from '../../interfaces/events/event-dispatcher'
+import { IEventHandler } from '../../interfaces/events/event-handler'
 
 export type EventMapping = Record<string, IEventHandler[]>
 

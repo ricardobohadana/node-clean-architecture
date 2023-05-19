@@ -3,8 +3,8 @@ import { MockProxy, mock } from 'vitest-mock-extended'
 import { INotificationRepository } from '@/domain/interfaces/repositories/notification.repository'
 import { IProductRepository } from '@/domain/interfaces/repositories/product.repository'
 import { IEventDispatcher } from '@/domain/interfaces/events/event-dispatcher'
-import { EventDispatcher } from '@/events/event-dispatcher'
-import { UpdateStockHandler } from '@/events/handlers/update-stock.handler'
+import { EventDispatcher } from '@/domain/application/dispatcher/event-dispatcher'
+import { UpdateStockHandler } from '@/domain/application/handlers/update-stock.handler'
 import { DomainEvents } from '@/domain/interfaces/events/domain-events'
 import { Product, ProductConstructorProps } from '@/domain/entities/product'
 import { faker } from '@faker-js/faker'
@@ -12,7 +12,7 @@ import { Transaction, TransactionConstructorProps } from '@/domain/entities/tran
 import { randomUUID } from 'crypto'
 import { TransactionTypeEnum } from '@/domain/entities/enums/transaction-type'
 import { TransactionCreatedEvent } from '@/domain/application/events/transaction-created.event'
-import { ShouldSendNotificationHandler } from '@/events/handlers/notification.handler'
+import { ShouldSendNotificationHandler } from '@/domain/application/handlers/notification.handler'
 
 describe('Transaction Created Event Handlers test', () => {
   let productRepository: MockProxy<IProductRepository>

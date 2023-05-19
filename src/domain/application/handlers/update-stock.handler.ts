@@ -1,8 +1,8 @@
-import { TransactionTypeEnum } from '../../domain/entities/enums/transaction-type'
-import { TransactionCreatedEventProps } from '../../domain/application/events/transaction-created.event'
-import { IEvent } from '../../domain/interfaces/events/event'
-import { IEventHandler } from '../../domain/interfaces/events/event-handler'
-import { IProductRepository } from '../../domain/interfaces/repositories/product.repository'
+import { TransactionTypeEnum } from '../../entities/enums/transaction-type'
+import { TransactionCreatedEventProps } from '../events/transaction-created.event'
+import { IEvent } from '../../interfaces/events/event'
+import { IEventHandler } from '../../interfaces/events/event-handler'
+import { IProductRepository } from '../../interfaces/repositories/product.repository'
 
 export class UpdateStockHandler implements IEventHandler<TransactionCreatedEventProps> {
   constructor(private readonly productRepository: IProductRepository) {}

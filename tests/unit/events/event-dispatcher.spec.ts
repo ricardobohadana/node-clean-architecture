@@ -1,15 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { EventDispatcher } from '@/events/event-dispatcher'
+import { EventDispatcher } from '@/domain/application/dispatcher/event-dispatcher'
 import { IProductRepository } from '@/domain/interfaces/repositories/product.repository'
 import { MockProxy, mock } from 'vitest-mock-extended'
 import { Product } from '@/domain/entities/product'
 import { faker } from '@faker-js/faker'
 import { Transaction } from '@/domain/entities/transaction'
 import { TransactionTypeEnum } from '@/domain/entities/enums/transaction-type'
-import { UpdateStockHandler } from '@/events/handlers/update-stock.handler'
+import { UpdateStockHandler } from '@/domain/application/handlers/update-stock.handler'
 import { TransactionCreatedEvent } from '@/domain/application/events/transaction-created.event'
 import { DomainEvents } from '@/domain/interfaces/events/domain-events'
-import { ShouldSendNotificationHandler } from '@/events/handlers/notification.handler'
+import { ShouldSendNotificationHandler } from '@/domain/application/handlers/notification.handler'
 import { INotificationRepository } from '@/domain/interfaces/repositories/notification.repository'
 
 describe('Domain event tests', () => {
