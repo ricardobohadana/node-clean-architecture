@@ -11,4 +11,5 @@ export interface INotificationRepository {
   }): Promise<Notification[]>
   create(notification: Notification): Promise<void>
   get(id: string): Promise<Notification | null>
+  update(notification: Notification): Promise<void>
 }

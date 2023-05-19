@@ -15,6 +15,7 @@ export class ReadNotificationUseCase {
 
     if (!notification.readAt) {
       notification.read()
+      await this.notificationRepository.update(notification)
     }
   }
 }
