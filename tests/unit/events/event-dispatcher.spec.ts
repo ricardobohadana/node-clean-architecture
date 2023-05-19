@@ -6,10 +6,10 @@ import { Product } from '@/domain/entities/product'
 import { faker } from '@faker-js/faker'
 import { Transaction } from '@/domain/entities/transaction'
 import { TransactionTypeEnum } from '@/domain/enums/transaction-type'
-import { TransactionCreatedProductEventHandler } from '@/events/handlers/transaction-created-event/product.handler'
+import { UpdateStockHandler } from '@/events/handlers/update-stock.handler'
 import { TransactionCreatedEvent } from '@/domain/events/transaction-created.event'
 import { DomainEvents } from '@/domain/interfaces/events/domain-events'
-import { TransactionCreatedNotificationEventHandler } from '@/events/handlers/transaction-created-event/notification.handler'
+import { ShouldSendNotificationHandler } from '@/events/handlers/notification.handler'
 import { INotificationRepository } from '@/domain/interfaces/repositories/notification.repository'
 
 describe('Domain event tests', () => {
@@ -23,7 +23,7 @@ describe('Domain event tests', () => {
 
   it('should be able to register an event', () => {
     const eventDispatcher = new EventDispatcher()
-    const eventHandler = new TransactionCreatedProductEventHandler(productRepository)
+    const eventHandler = new UpdateStockHandler(productRepository)
 
     eventDispatcher.register(DomainEvents.TRANSACTION_CREATED_EVENT, eventHandler)
 
@@ -33,8 +33,8 @@ describe('Domain event tests', () => {
 
   it('should be able to dispatch an event', async () => {
     const eventDispatcher = new EventDispatcher()
-    const productHandler = new TransactionCreatedProductEventHandler(productRepository)
-    const notificationHandler = new TransactionCreatedNotificationEventHandler(
+    const productHandler = new UpdateStockHandler(productRepository)
+    const notificationHandler = new ShouldSendNotificationHandler(
       notificationRepository,
     )
     const spyProductHandler = vi.spyOn(productHandler, 'execute')

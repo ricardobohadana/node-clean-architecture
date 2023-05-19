@@ -4,7 +4,7 @@ import { INotificationRepository } from '@/domain/interfaces/repositories/notifi
 import { IProductRepository } from '@/domain/interfaces/repositories/product.repository'
 import { IEventDispatcher } from '@/domain/interfaces/events/event-dispatcher'
 import { EventDispatcher } from '@/events/event-dispatcher'
-import { TransactionCreatedProductEventHandler } from '@/events/handlers/transaction-created-event/product.handler'
+import { UpdateStockHandler } from '@/events/handlers/update-stock.handler'
 import { DomainEvents } from '@/domain/interfaces/events/domain-events'
 import { Product, ProductConstructorProps } from '@/domain/entities/product'
 import { faker } from '@faker-js/faker'
@@ -12,15 +12,15 @@ import { Transaction, TransactionConstructorProps } from '@/domain/entities/tran
 import { randomUUID } from 'crypto'
 import { TransactionTypeEnum } from '@/domain/enums/transaction-type'
 import { TransactionCreatedEvent } from '@/domain/events/transaction-created.event'
-import { TransactionCreatedNotificationEventHandler } from '@/events/handlers/transaction-created-event/notification.handler'
+import { ShouldSendNotificationHandler } from '@/events/handlers/notification.handler'
 
 describe('Transaction Created Event Handlers test', () => {
   let productRepository: MockProxy<IProductRepository>
   let notificationRepository: MockProxy<INotificationRepository>
   let eventDispatcher: IEventDispatcher
   let event: TransactionCreatedEvent
-  let sutProductHandler: TransactionCreatedProductEventHandler
-  let sutNotificationHandler: TransactionCreatedNotificationEventHandler
+  let sutProductHandler: UpdateStockHandler
+  let sutNotificationHandler: ShouldSendNotificationHandler
 
   let productProps: ProductConstructorProps
   let transactionProps: TransactionConstructorProps
@@ -29,8 +29,8 @@ describe('Transaction Created Event Handlers test', () => {
     notificationRepository = mock<INotificationRepository>()
     productRepository = mock<IProductRepository>()
     eventDispatcher = new EventDispatcher()
-    sutProductHandler = new TransactionCreatedProductEventHandler(productRepository)
-    sutNotificationHandler = new TransactionCreatedNotificationEventHandler(notificationRepository)
+    sutProductHandler = new UpdateStockHandler(productRepository)
+    sutNotificationHandler = new ShouldSendNotificationHandler(notificationRepository)
     eventDispatcher.register(DomainEvents.TRANSACTION_CREATED_EVENT, sutProductHandler)
     eventDispatcher.register(DomainEvents.TRANSACTION_CREATED_EVENT, sutNotificationHandler)
 

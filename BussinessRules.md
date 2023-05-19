@@ -25,7 +25,9 @@
 - `[ ]` Deve ser possível obter os produtos cadastrados
 - `[✅]` Deve ser possível registrar uma compra
 - `[✅]` Deve ser possível registrar uma venda
-- `[ ]` Deve ser possível definir (ou alterar) um limite mínimo de estoque para alerta
+- `[ ]` Deve ser possível alterar um limite mínimo de estoque para alerta
+- `[✅]` Deve ser possível definir um limite mínimo de estoque para alerta de um produto
+- `[✅]` Deve ser possível receber uma notificação caso o estoque de um produto fique <= limite mínimo
 - `[ ]` Deve ser possível visualizar o histórico de compra e venda de um produto
 - `[ ]` Deve ser possível visualizar as notificações do sistema
 - `[ ]` Deve ser possível visualizar produtos notificados
