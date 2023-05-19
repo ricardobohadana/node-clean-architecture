@@ -22,7 +22,7 @@
 ## Requisitos funcionais
 
 - `[✅]` Deve ser possível cadastrar um produto
-- `[ ]` Deve ser possível obter os produtos cadastrados
+- `[✅]` Deve ser possível obter os produtos cadastrados
 - `[✅]` Deve ser possível registrar uma compra
 - `[✅]` Deve ser possível registrar uma venda
 - `[✅]` Deve ser possível alterar um limite mínimo de estoque para alerta
@@ -44,8 +44,8 @@
 
 ## Requisitos não-funcionais (técnicos)
 
-- `[ ]` A listagem de produtos deve conter paginação
-- `[ ]` A listagem de produtos deve conter filtros opcionais
+- `[✅]` A listagem de produtos deve conter paginação
+- `[✅]` A listagem de produtos deve conter filtros opcionais
 - `[✅]` O histórico de transações deve conter paginação
 - `[✅]` A históricod e transações deve conter filtros opcionais
 
