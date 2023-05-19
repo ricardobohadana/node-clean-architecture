@@ -1,5 +1,5 @@
-import { TransactionTypeEnum } from '../../domain/enums/transaction-type'
-import { TransactionCreatedEventProps } from '../../domain/events/transaction-created.event'
+import { TransactionTypeEnum } from '../../domain/entities/enums/transaction-type'
+import { TransactionCreatedEventProps } from '../../domain/application/events/transaction-created.event'
 import { IEvent } from '../../domain/interfaces/events/event'
 import { IEventHandler } from '../../domain/interfaces/events/event-handler'
 import { IProductRepository } from '../../domain/interfaces/repositories/product.repository'

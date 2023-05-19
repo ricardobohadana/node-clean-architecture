@@ -10,8 +10,8 @@ import { Product, ProductConstructorProps } from '@/domain/entities/product'
 import { faker } from '@faker-js/faker'
 import { Transaction, TransactionConstructorProps } from '@/domain/entities/transaction'
 import { randomUUID } from 'crypto'
-import { TransactionTypeEnum } from '@/domain/enums/transaction-type'
-import { TransactionCreatedEvent } from '@/domain/events/transaction-created.event'
+import { TransactionTypeEnum } from '@/domain/entities/enums/transaction-type'
+import { TransactionCreatedEvent } from '@/domain/application/events/transaction-created.event'
 import { ShouldSendNotificationHandler } from '@/events/handlers/notification.handler'
 
 describe('Transaction Created Event Handlers test', () => {

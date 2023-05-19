@@ -1,4 +1,4 @@
-import { TransactionTypeEnum } from '../enums/transaction-type'
+import { TransactionTypeEnum } from './enums/transaction-type'
 import { BaseEntityProps, Entity } from './base/entity'
 
 export type TransactionProps = {

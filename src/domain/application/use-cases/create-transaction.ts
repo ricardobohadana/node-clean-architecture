@@ -1,13 +1,13 @@
-import { Transaction } from '../entities/transaction'
-import { TransactionTypeEnum } from '../enums/transaction-type'
+import { Transaction } from '../../entities/transaction'
+import { TransactionTypeEnum } from '../../entities/enums/transaction-type'
 import { InvalidTransactionAmountError } from '../errors/invalid-transaction-amount.error'
 import { InvalidTransactionDateError } from '../errors/invalid-transaction-date.error'
 import { NotEnoughStockError } from '../errors/not-enough-stock.error'
 import { ProductDoesNotExistError } from '../errors/product-does-not-exist.error'
 import { TransactionCreatedEvent } from '../events/transaction-created.event'
-import { IEventDispatcher } from '../interfaces/events/event-dispatcher'
-import { IProductRepository } from '../interfaces/repositories/product.repository'
-import { ITransactionRepository } from '../interfaces/repositories/transaction.repository'
+import { IEventDispatcher } from '../../interfaces/events/event-dispatcher'
+import { IProductRepository } from '../../interfaces/repositories/product.repository'
+import { ITransactionRepository } from '../../interfaces/repositories/transaction.repository'
 
 export class CreateTransactionUseCase {
   constructor(

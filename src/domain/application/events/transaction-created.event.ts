@@ -1,7 +1,7 @@
-import { Product } from '../entities/product'
-import { Transaction } from '../entities/transaction'
-import { DomainEvents } from '../interfaces/events/domain-events'
-import { IEvent } from '../interfaces/events/event'
+import { Product } from '../../entities/product'
+import { Transaction } from '../../entities/transaction'
+import { DomainEvents } from '../../interfaces/events/domain-events'
+import { IEvent } from '../../interfaces/events/event'
 
 export interface TransactionCreatedEventProps {
   product: Product
