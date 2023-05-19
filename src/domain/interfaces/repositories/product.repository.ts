@@ -6,4 +6,5 @@ export interface IProductRepository {
   getProductById(id: string): Promise<Product | null>
   updateStock(data: { id: string; inStockAmount: number }): Promise<void>
   update(product: Product): Promise<void>
+  getAll(filter: { take: number; skip: number; name: string }): Promise<Product[]>
 }
