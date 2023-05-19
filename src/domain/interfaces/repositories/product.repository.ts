@@ -5,4 +5,5 @@ export interface IProductRepository {
   save(product: Product): Promise<void>
   getProductById(id: string): Promise<Product | null>
   updateStock(data: { id: string; inStockAmount: number }): Promise<void>
+  update(product: Product): Promise<void>
 }

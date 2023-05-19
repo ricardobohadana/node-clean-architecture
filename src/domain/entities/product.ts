@@ -13,6 +13,15 @@ export type ProductProps = {
 export type ProductConstructorProps = Optional<ProductProps, 'inStockAmount'> & BaseEntityProps
 
 export class Product extends Entity<ProductProps> {
+  set inStockAmount(value) {
+    if (value < 0) throw new Error()
+    this.props.inStockAmount = value
+  }
+
+  set notificationLimit(value) {
+    this.props.notificationLimit = value
+  }
+
   get name() {
     return this.props.name
   }
@@ -23,11 +32,6 @@ export class Product extends Entity<ProductProps> {
 
   get inStockAmount() {
     return this.props.inStockAmount
-  }
-
-  set inStockAmount(value) {
-    if (value < 0) throw new Error()
-    this.props.inStockAmount = value
   }
 
   get size() {
