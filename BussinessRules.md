@@ -28,10 +28,10 @@
 - `[✅]` Deve ser possível alterar um limite mínimo de estoque para alerta
 - `[✅]` Deve ser possível definir um limite mínimo de estoque para alerta de um produto
 - `[✅]` Deve ser possível receber uma notificação caso o estoque de um produto fique <= limite mínimo
-- `[  ]` Deve ser possível ler uma notificação
+- `[✅]` Deve ser possível ler uma notificação
 - `[✅]` Deve ser possível visualizar o histórico de compra e venda de um produto
 - `[✅]` Deve ser possível visualizar as notificações do sistema
-- `[ ]` Deve ser possível visualizar produtos notificados
+- `[  ]` Deve ser possível visualizar produtos notificados
 
 ## Regras de negócio
 
@@ -58,9 +58,9 @@
       <li>[✅] Criar produto</li>
       <li>[✅] Comprar produto</li>
       <li>[✅] Vender produto</li>
-      <li>[  ] Pegar lista de produtos cadastrados</li>
-      <li>[  ] Definir limite mínimo de estoque para um produto</li>
-      <li>[  ] Visualizar historico de compra e venda de um produto</li>
-      <li>[  ] Gerar notificação de produto acabando</li>
+      <li>[✅] Pegar lista de produtos cadastrados</li>
+      <li>[✅] Definir limite mínimo de estoque para um produto</li>
+      <li>[✅] Visualizar historico de compra e venda de um produto</li>
+      <li>[✅] Gerar notificação de produto acabando</li>
     </ul>
 </details>
