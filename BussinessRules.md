@@ -25,7 +25,7 @@
 - `[ ]` Deve ser possível obter os produtos cadastrados
 - `[✅]` Deve ser possível registrar uma compra
 - `[✅]` Deve ser possível registrar uma venda
-- `[ ]` Deve ser possível alterar um limite mínimo de estoque para alerta
+- `[✅]` Deve ser possível alterar um limite mínimo de estoque para alerta
 - `[✅]` Deve ser possível definir um limite mínimo de estoque para alerta de um produto
 - `[✅]` Deve ser possível receber uma notificação caso o estoque de um produto fique <= limite mínimo
 - `[ ]` Deve ser possível visualizar o histórico de compra e venda de um produto
@@ -40,7 +40,7 @@
 - `[✅]` Não deve ser possível comprar/vender 0 unidades de um produto
 - `[✅]` Não deve ser possível cadastrar uma compra/venda futura
 - `[✅]` Não deve ser possível vender uma quantidade maior do que o estoque
-- `[ ]` Não deve ser possível definir um limite mínimo de estoque 0
+- `[✅]` Deve ser possível definir um limite mínimo de estoque 0 - que seria notificar o cliente apenas quando o produto acabar
 
 ## Requisitos não-funcionais (técnicos)
 
