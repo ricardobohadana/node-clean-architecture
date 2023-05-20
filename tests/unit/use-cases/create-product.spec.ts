@@ -65,7 +65,7 @@ describe('Create product unit tests', () => {
       price: Number(faker.commerce.price()),
     }
     productRepository.getProductByName.mockReturnValue(
-      new Promise((resolve) => resolve(new Product(productData))),
+      new Promise((resolve) => resolve([new Product(productData)])),
     )
     expect(async () => await sutUseCase.execute(productData)).rejects.toBeInstanceOf(
       DuplicateEntityError,

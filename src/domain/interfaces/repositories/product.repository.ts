@@ -1,7 +1,7 @@
 import { Product } from '../../entities/product'
 
 export interface IProductRepository {
-  getProductByName(name: string): Promise<Product | null>
+  getProductByName(name: string): Promise<Product[]>
   save(product: Product): Promise<void>
   getProductById(id: string): Promise<Product | null>
   update(product: Product): Promise<void>

@@ -19,7 +19,7 @@ model Product {
   price             BigInt
   inStockAmount     Int
   size              String?
-  color             String
+  color             String?
   notificationLimit Int?
   Transaction       Transaction[]
   Notification      Notification[]

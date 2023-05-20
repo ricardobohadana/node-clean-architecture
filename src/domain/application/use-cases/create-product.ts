@@ -17,9 +17,10 @@ export class CreateProductUseCase {
     if (data.price <= 0) throw new InvalidPriceError()
 
     const product = new Product(data)
-    const productWithSameName = await this.productRepository.getProductByName(data.name)
+    const productsWithSameName = await this.productRepository.getProductByName(data.name)
 
-    if (productWithSameName && product.equals(productWithSameName)) throw new DuplicateEntityError()
+    if (productsWithSameName && productsWithSameName.some((p) => product.equals(p)))
+      throw new DuplicateEntityError()
 
     this.productRepository.save(product)
     return product
