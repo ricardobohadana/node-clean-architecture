@@ -12,7 +12,7 @@ import { Transaction, TransactionConstructorProps } from '@/domain/entities/tran
 import { randomUUID } from 'crypto'
 import { TransactionTypeEnum } from '@/domain/entities/enums/transaction-type'
 import { TransactionCreatedEvent } from '@/domain/application/events/transaction-created.event'
-import { ShouldSendNotificationHandler } from '@/domain/application/handlers/notification.handler'
+import { ShouldCreateNotificationHandler } from '@/domain/application/handlers/should-create-notification.handler'
 
 describe('Transaction Created Event Handlers test', () => {
   let productRepository: MockProxy<IProductRepository>
@@ -20,7 +20,7 @@ describe('Transaction Created Event Handlers test', () => {
   let eventDispatcher: IEventDispatcher
   let event: TransactionCreatedEvent
   let sutProductHandler: UpdateStockHandler
-  let sutNotificationHandler: ShouldSendNotificationHandler
+  let sutNotificationHandler: ShouldCreateNotificationHandler
 
   let productProps: ProductConstructorProps
   let transactionProps: TransactionConstructorProps
@@ -34,7 +34,7 @@ describe('Transaction Created Event Handlers test', () => {
     notificationRepository.create.mockImplementation(async (notification) => {})
     eventDispatcher = new EventDispatcher()
     sutProductHandler = new UpdateStockHandler(productRepository)
-    sutNotificationHandler = new ShouldSendNotificationHandler(notificationRepository)
+    sutNotificationHandler = new ShouldCreateNotificationHandler(notificationRepository)
     eventDispatcher.register(DomainEvents.TRANSACTION_CREATED_EVENT, sutProductHandler)
     eventDispatcher.register(DomainEvents.TRANSACTION_CREATED_EVENT, sutNotificationHandler)
 

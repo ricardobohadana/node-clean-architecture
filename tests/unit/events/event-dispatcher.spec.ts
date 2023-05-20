@@ -9,7 +9,7 @@ import { TransactionTypeEnum } from '@/domain/entities/enums/transaction-type'
 import { UpdateStockHandler } from '@/domain/application/handlers/update-stock.handler'
 import { TransactionCreatedEvent } from '@/domain/application/events/transaction-created.event'
 import { DomainEvents } from '@/domain/interfaces/events/domain-events'
-import { ShouldSendNotificationHandler } from '@/domain/application/handlers/notification.handler'
+import { ShouldCreateNotificationHandler } from '@/domain/application/handlers/should-create-notification.handler'
 import { INotificationRepository } from '@/domain/interfaces/repositories/notification.repository'
 
 describe('Domain event tests', () => {
@@ -34,7 +34,7 @@ describe('Domain event tests', () => {
   it('should be able to dispatch an event', async () => {
     const eventDispatcher = new EventDispatcher()
     const productHandler = new UpdateStockHandler(productRepository)
-    const notificationHandler = new ShouldSendNotificationHandler(
+    const notificationHandler = new ShouldCreateNotificationHandler(
       notificationRepository,
     )
     const spyProductHandler = vi.spyOn(productHandler, 'execute')

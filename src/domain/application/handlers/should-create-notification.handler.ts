@@ -5,7 +5,9 @@ import { IEvent } from '../../interfaces/events/event'
 import { IEventHandler } from '../../interfaces/events/event-handler'
 import { INotificationRepository } from '../../interfaces/repositories/notification.repository'
 
-export class ShouldSendNotificationHandler implements IEventHandler<TransactionCreatedEventProps> {
+export class ShouldCreateNotificationHandler
+  implements IEventHandler<TransactionCreatedEventProps>
+{
   constructor(private readonly notificationRepository: INotificationRepository) {}
 
   async execute({
