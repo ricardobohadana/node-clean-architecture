@@ -79,8 +79,13 @@
    - `npm install supertest -D`
    - `npm install @types/supertest -D`
 
-2. Para não utilizarmos o banco populado para testes, criaremos um ambiente de testes separado que, para cada teste, irá gerar um banco de dados diferente para rodarmos nossos testes e2e de forma independente. Por isso, criamos o pacote _`vitest-environment-prisma`_ dentro da nossa pasta do prisma e faremos o link dele com a nossa aplicação por meio de dois scripts que vão rodar outros dois scripts utilizando o pacote `npm-run-all`
-   - `"test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma"`
-   - `"test:install-prisma-environment": "npm link vitest-environment-prisma"`
-   - `"pretest:e2e": "run-s test:create-prisma-environment test:install-prisma-environment"`
-   - `"test:e2e": "vitest run --dir src/tests/http"`
+2. Para não utilizarmos o banco populado para testes, criaremos um ambiente de testes separado que, para cada teste, irá gerar um banco de dados diferente para rodarmos nossos testes e2e de forma independente. Por isso, criamos o pacote _`vitest-environment-prisma`_ dentro da nossa pasta do prisma. Precisaremos instalar o pacote abaixo para rodar os scripts de criação e exclusão do banco de dados e link da aplicação a cada teste e2e.
+   - `npm install npm-run-all -D`
+
+Além disso, rodamos `npm init -y` dentro da pasta criada acima e criamos um arquivo chamado `prisma-test-environment.ts`. Devemos colocar esse arquivo como ponto de entrada no package.json criado (dentro da propriedade main). Dentro deste arquivo, colocaremos o código responsável pela criação de um novo ambiente a cada teste e2e.
+Faremos, então o link dele com a nossa aplicação por meio de dois scripts que vão rodar outros dois scripts utilizando o pacote `npm-run-all`
+
+- `"test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma"`
+- `"test:install-prisma-environment": "npm link vitest-environment-prisma"`
+- `"pretest:e2e": "run-s test:create-prisma-environment test:install-prisma-environment"`
+- `"test:e2e": "vitest run --dir src/tests/http"`
