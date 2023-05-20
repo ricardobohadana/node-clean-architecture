@@ -39,6 +39,20 @@
    - Neste treinamento, vamos optar pelo _`mock`_ do repositório instalando o pacote `vitest-mock-extended`.
    - Comando para verificar a cobertura dos testes: `"test:coverage": "vitest --coverage"`
 
+## Adicionando a camada de dados da aplicação
+
+1. Utilizaremos um ORM chamado `Prisma`, bastante conhecido no mundo do _nodejs_ devido à sua performance e integração fantástica com o Typescript. Para isso, instalaremos o pacote com `npm install prisma`
+2. No link abaixo está a documentação do prisma sobre como iniciar o setup de acordo com os diferentes banco de dados que você está trabalhando. Aqui utilizaremos o SQL Server.
+
+   - https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/connect-your-database-typescript-sqlserver
+
+   - Então, iniciamos da seguinte forma: `npx prisma init --datasource-provider sqlserver`. O comando criará uma pasta chamada `prisma` na raíz do projeto contendo um arquivo `schema.prisma`, que será utilizado na criação das tabelas da aplicação.
+
+   - Recomenda-se que você tenha a extensão do VS Code `Prisma` instalada, bem como a seguinte configuração no seu `settings.json`
+   - `"[prisma]": { "editor.formatOnSave": true, "editor.defaultFormatter": "Prisma.prisma" }`
+
+3. Define-se os modelos das entidades/tabelas dos bancos de dados e faz-se a migração com o comando `npx prisma migrate dev`
+
 ## Início do desenvolvimento da API
 
 1. Para este treinamento iremos utilizar o pacote `fastify` em detrimento do famoso `express`. A principal motivação para tal decisão é o fato de o express ter atingido seu estado máximo de desenvolvimento, enquanto o `fastify` é mantido de forma mais ativa, com melhor suporte e uma melhora considerável na performance.
@@ -53,20 +67,6 @@
    - `"dev": "tsx watch src/server.ts"` ➡️ roda nossa aplicação como typescript e em modo "watch", esperando por atualizações para reiniciar e aplicá-las automaticamente.
    - `"build": "tsup src --out-dir build"` ➡️ responsável pela transformação da aplicação ts em js para o processo de deploy
    - `"start": "build/server.js"` ➡️ responsável pelo início da aplicação definitiva js (production ready version)
-
-## Adicionando a camada de dados da aplicação
-
-1. Utilizaremos um ORM chamado `Prisma`, bastante conhecido no mundo do _nodejs_ devido à sua performance e integração fantástica com o Typescript. Para isso, instalaremos o pacote com `npm install prisma`
-2. No link abaixo está a documentação do prisma sobre como iniciar o setup de acordo com os diferentes banco de dados que você está trabalhando. Aqui utilizaremos o SQL Server.
-
-   - https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/connect-your-database-typescript-sqlserver
-
-   - Então, iniciamos da seguinte forma: `npx prisma init --datasource-provider sqlserver`. O comando criará uma pasta chamada `prisma` na raíz do projeto contendo um arquivo `schema.prisma`, que será utilizado na criação das tabelas da aplicação.
-
-   - Recomenda-se que você tenha a extensão do VS Code `Prisma` instalada, bem como a seguinte configuração no seu `settings.json`
-   - `"[prisma]": { "editor.formatOnSave": true, "editor.defaultFormatter": "Prisma.prisma" }`
-
-3. Define-se os modelos das entidades/tabelas dos bancos de dados e faz-se a migração com o comando `npx prisma migrate dev`
 
 ## Primeiro use-case
 
