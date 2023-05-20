@@ -9,3 +9,44 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Product {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+
+  name              String
+  price             BigInt
+  inStockAmount     Int
+  size              String?
+  color             String
+  notificationLimit Int?
+  Transaction       Transaction[]
+  Notification      Notification[]
+
+  @@unique([name, size, color])
+}
+
+model Transaction {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+
+  productId       String
+  amount          Int
+  type            String
+  transactionDate DateTime
+
+  Product Product @relation(fields: [productId], references: [id])
+}
+
+model Notification {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+
+  productId String
+  readAt    DateTime?
+
+  Product Product @relation(fields: [productId], references: [id])
+}

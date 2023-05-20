@@ -2,7 +2,6 @@ import { Notification } from '../../entities/notification'
 
 export interface INotificationRepository {
   getAll(filter: {
-    month?: number
     year?: number
     take: number
     skip: number
